@@ -19,7 +19,9 @@ type LoggerHandler struct {
 // Adds output for logger handler.
 // This actually creates new Logrus's Logger instance and configure
 // it to write to given writer.
-func (lh *LoggerHandler) CreateOutput(name string, writer io.Writer, colors bool) {
+// To configure debug level you should pass it's name as debugLvl.
+// Valid values: "", "debug" (the default), "info", "warn", "error"
+func (lh *LoggerHandler) CreateOutput(name string, writer io.Writer, colors bool, debugLvl string) {
 	// Formatter.
 	logrus_formatter := new(logrus.TextFormatter)
 	logrus_formatter.DisableTimestamp = false
@@ -37,8 +39,15 @@ func (lh *LoggerHandler) CreateOutput(name string, writer io.Writer, colors bool
 
 	logrus_instance := logrus.New()
 	logrus_instance.Out = writer
-	// ToDo: configurable level.
+	// Defaulting to debug.
 	logrus_instance.Level = logrus.DebugLevel
+	if debugLvl == "info" {
+		logrus_instance.Level = logrus.InfoLevel
+	} else if debugLvl == "warn" {
+		logrus_instance.Level = logrus.WarnLevel
+	} else if debugLvl == "error" {
+		logrus_instance.Level = logrus.ErrorLevel
+	}
 	logrus_instance.Formatter = logrus_formatter
 
 	lh.instancesMutex.Lock()
