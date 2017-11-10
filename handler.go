@@ -54,7 +54,7 @@ func (lh *LoggerHandler) CreateOutput(name string, writer io.Writer, colors bool
 	lh.instances[name] = logrus_instance
 
 	for _, logger := range lh.instances {
-		logger.Println("Added new logger output:", name)
+		logger.Debugln("Added new logger output:", name)
 	}
 	lh.instancesMutex.Unlock()
 }
