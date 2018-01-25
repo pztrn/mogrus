@@ -18,7 +18,7 @@ import (
     "os"
 
     // tools
-    "dev.pztrn.name/golibs/mogrus"
+    "bitbucket.org/pztrn/mogrus"
 )
 
 func main() {
