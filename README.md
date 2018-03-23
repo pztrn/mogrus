@@ -1,3 +1,5 @@
+[![GoDoc](https://godoc.org/github.com/pztrn/mogrus?status.svg)](https://godoc.org/github.com/pztrn/mogrus) [![Build Status](https://travis-ci.org/pztrn/mogrus.svg?branch=master)](https://travis-ci.org/pztrn/mogrus)
+
 # Mogrus
 
 Logger thing built on top of github.com/sirupsen/logrus with ability to
@@ -18,14 +20,14 @@ import (
     "os"
 
     // tools
-    "bitbucket.org/pztrn/mogrus"
+    "github.com/pztrn/mogrus"
 )
 
 func main() {
     l := mogrus.New()
     l.Initialize()
     log := l.CreateLogger("helloworld")
-    log.CreateOutput("stdout", os.Stdout, true)
+    log.CreateOutput("stdout", os.Stdout, true, "debug")
 
     // File output.
     file_output, err := os.Create("/tmp/hellorowld.log")

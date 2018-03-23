@@ -1,3 +1,23 @@
+// Copyright (c) 2017-2018, Stanislav N. aka pztrn.
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject
+// to the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+// CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+// TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
+// OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 package mogrus
 
 import (
@@ -16,7 +36,7 @@ type LoggerHandler struct {
 	instancesMutex sync.Mutex
 }
 
-// Adds output for logger handler.
+// CreateOutput adds output for logger handler.
 // This actually creates new Logrus's Logger instance and configure
 // it to write to given writer.
 // To configure debug level you should pass it's name as debugLvl.
@@ -59,7 +79,8 @@ func (lh *LoggerHandler) CreateOutput(name string, writer io.Writer, colors bool
 	lh.instancesMutex.Unlock()
 }
 
-// Formats string by replacing "{{ var }}"'s with data from passed map.
+// FormatString formats string by replacing "{{ var }}"'s with data from
+// passed map.
 func (lh *LoggerHandler) FormatString(data string, replacers map[string]string) string {
 	for k, v := range replacers {
 		data = strings.Replace(data, "{{ "+k+" }}", v, -1)
@@ -68,14 +89,14 @@ func (lh *LoggerHandler) FormatString(data string, replacers map[string]string) 
 	return data
 }
 
-// Initializes logger handler.
+// Initialize initializes logger handler.
 // It will only initializes LoggerHandler structure, see CreateOutput()
 // for configuring output for this logger handler.
 func (lh *LoggerHandler) Initialize() {
 	lh.instances = make(map[string]*logrus.Logger)
 }
 
-// Removes previously created output.
+// RemoveOutput removes previously created output.
 // If output isn't found - doing nothing.
 func (lh *LoggerHandler) RemoveOutput(output_name string) {
 	lh.instancesMutex.Lock()
